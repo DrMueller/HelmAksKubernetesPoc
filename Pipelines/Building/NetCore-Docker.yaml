@@ -3,7 +3,7 @@ name: 1.0$(rev:.r) # build numbering format
 variables:
   BuildConfiguration: 'Release'
   ApplyDockerstack: false
-  FolderToPublish: 'HelmAksKubernetesProc'
+  FolderToPublish: 'Application'
   PublishPath: $(Build.Repository.LocalPath)/DockerContent
   
 resources:
@@ -31,3 +31,7 @@ jobs:
   - template: AzureDevOps/BuildTemplates/NetCore/Steps/Build_And_Push_Docker.yaml@ALMStuff
     parameters:
       ApplyDockerstack: $(ApplyDockerstack)
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish'
+    inputs:
+      PathtoPublish: 'Pipelines/Releasing'
