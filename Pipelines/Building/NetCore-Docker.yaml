@@ -63,6 +63,7 @@ jobs:
           imageName: "$(ImageName)"
           additionalImageTags: "$(Build.BuildNumber)"
           includeLatestTag: true
+          Dockerfile: Pipelines/Building/Dockerfile
       - task: Docker@0
         displayName: "Push Docker Image"
         inputs:
