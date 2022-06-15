@@ -1,37 +1,78 @@
 name: 1.0$(rev:.r) # build numbering format
 
 variables:
-  BuildConfiguration: 'Release'
-  ApplyDockerstack: false
-  FolderToPublish: 'Application'
-  PublishPath: $(Build.Repository.LocalPath)/DockerContent
-  
+  BuildConfiguration: "Release"
+  PublishPath: $(Build.Repository.LocalPath)/DockerContent # used in Dockerfile
+  CsProjectPath: "Sources/Application/*.csproj"
+
 resources:
   repositories:
-  - repository: ALMStuff
-    type: github
-    name: DrMueller/ALMStuff
-    ref: refs/heads/master
-    endpoint: GitHub-DrMueller
+    - repository: ALMStuff
+      type: github
+      name: DrMueller/ALMStuff
+      ref: refs/heads/master
+      endpoint: GitHub-DrMueller
 
 jobs:
-- job: 'BuildAndPublishToNuGet'
-  displayName: 'Build and publish to NuGet'
-  pool:
-    vmImage: 'windows-2022'
-  steps:
-  - template: AzureDevOps/BuildTemplates/NetCore/Steps/Initialize_And_Test.yaml@ALMStuff
-    parameters:
-      BuildConfiguration: $(BuildConfiguration)
-  - template: AzureDevOps/BuildTemplates/NetCore/Steps/Publish.yaml@ALMStuff
-    parameters:
-      BuildConfiguration: $(BuildConfiguration)
-      FolderToPublish: $(FolderToPublish)
-      PublishPath: $(PublishPath)
-  - template: AzureDevOps/BuildTemplates/NetCore/Steps/Build_And_Push_Docker.yaml@ALMStuff
-    parameters:
-      ApplyDockerstack: $(ApplyDockerstack)
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish'
-    inputs:
-      PathtoPublish: 'Pipelines/Releasing'
+  - job: "BuildAndPublishToNuGet"
+    displayName: "Build and publish to NuGet"
+    pool:
+      vmImage: "windows-2022"
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs:
+          command: restore
+          projects: $(CsProjectPath)
+          vstsFeed: "3c2d9c9a-d8f7-42f4-b7a3-dddf4064110a"
+          verbosityRestore: Diagnostic
+      - task: DotNetCoreCLI@2
+        displayName: "Build with Warnings as Errors"
+        inputs:
+          projects: $(CsProjectPath)
+          arguments: '/p:TreatWarningsAsErrors="true" --configuration $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        displayName: Publish
+        inputs:
+          command: publish
+          publishWebProjects: false
+          projects: $(CsProjectPath)
+          arguments: "--configuration $(BuildConfiguration) --output $(PublishPath) /p:DeleteExistingFiles=True"
+          zipAfterPublish: false
+          modifyOutputPath: false
+      - task: YodLabs.VariableTasks.SetVariable.SetVariable@0
+        displayName: "Set Variable ImageName to $(Build.Repository.Name) with toLowerCase applied"
+        inputs:
+          variableName: ImageName
+          value: "$(Build.Repository.Name)"
+          transform: toLowerCase
+      - task: YodLabs.VariableTasks.SetVariable.SetVariable@0
+        displayName: "Set Variable ImageName to $(ImageName) with replace applied"
+        inputs:
+          variableName: ImageName
+          value: "$(ImageName)"
+          transform: replace
+          searchValue: '\.'
+          newValue: "-"
+      - task: Docker@0
+        displayName: "Build Docker Image"
+        inputs:
+          buildContext: "Tra"
+          containerregistrytype: "Container Registry"
+          dockerRegistryConnection: DockerHub
+          imageName: "$(ImageName)"
+          additionalImageTags: "$(Build.BuildNumber)"
+          includeLatestTag: true
+      - task: Docker@0
+        displayName: "Push Docker Image"
+        inputs:
+          containerregistrytype: "Container Registry"
+          dockerRegistryConnection: DockerHub
+          action: "Push an image"
+          imageName: "$(ImageName)"
+          additionalImageTags: "$(Build.BuildNumber)"
+          includeLatestTag: true
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish"
+        inputs:
+          PathtoPublish: "Pipelines/Releasing"
