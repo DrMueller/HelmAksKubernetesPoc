@@ -48,10 +48,10 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing # Use the HTTP application routing add-on
   hosts:
-    - host: chart-example.local
+    - host: 09ab799fd5674c4594a5.centralus.aksapp.io
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
