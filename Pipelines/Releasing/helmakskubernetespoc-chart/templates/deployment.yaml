@@ -1,29 +1,61 @@
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helmakskubernetespoc-website
+  name: {{ include "helmakskubernetespoc-chart.fullname" . }}
+  labels:
+    {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}
 spec:
-  selector: # Define the wrapping strategy
-    matchLabels: # Match all pods with the defined labels
-      app: helmakskubernetespoc-website # Labels follow the `name: value` template
-  template: # This is the template of the pod inside the deployment
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "helmakskubernetespoc-chart.selectorLabels" . | nindent 6 }}
+  template:
     metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        app: helmakskubernetespoc-website
+        {{- include "helmakskubernetespoc-chart.selectorLabels" . | nindent 8 }}
     spec:
-      nodeSelector:
-        kubernetes.io/os: linux
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "helmakskubernetespoc-chart.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - image: drmueller/helmakskubernetespoc:latest
-          name: helmakskubernetespoc-website
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 250m
-              memory: 256Mi
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
-              name: http
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
