@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   # repository: mcr.microsoft.com/mslearn/samples/contoso-website
   repository: drmueller/helmakskubernetespoc
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
