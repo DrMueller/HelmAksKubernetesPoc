@@ -17,7 +17,7 @@ steps:
       namespace: default
       command: upgrade
       chartType: FilePath
-      chartPath: "$(System.DefaultWorkingDirectory)/_HelmAksKubernetesPoc-CI/drop/helmakskubernetespoc-chart"
+      chartPath: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
       chartVersion: 1
       releaseName: release
       waitForExecution: false
