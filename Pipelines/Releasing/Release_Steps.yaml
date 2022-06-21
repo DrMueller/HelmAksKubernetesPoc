@@ -1,4 +1,24 @@
 steps:
-  - template: StepTemplates/Initialize.yaml
-  - template: StepTemplates/Align_Resources.yaml
-  - template: StepTemplates/Release_App.yaml
+  - task: DownloadBuildArtifacts@1
+    displayName: "Download Build Artifacts"
+    inputs:
+      buildType: specific
+      project: 'ba9fa09c-552b-4c7d-ac6c-65c3351012f4'
+      pipeline: 198
+      specificBuildWithTriggering: true
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: HelmInstaller@0
+    displayName: "Install Helm"
+  - task: HelmDeploy@0
+    displayName: "helm upgrade"
+    inputs:
+      connectionType: "Kubernetes Service Connection"
+      kubernetesServiceConnection: helmakskubernetespoc2
+      namespace: default
+      command: upgrade
+      chartType: FilePath
+      chartPath: "$(System.DefaultWorkingDirectory)/_HelmAksKubernetesPoc-CI/drop/helmakskubernetespoc-chart"
+      chartVersion: 1
+      releaseName: release
+      waitForExecution: false
+      arguments: "--debug"
