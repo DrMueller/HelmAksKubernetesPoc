@@ -17,7 +17,6 @@ jobs:
   - job: "BuildAndPublishToNuGet"
     displayName: "Build and publish to NuGet"
     pool:
-      # vmImage: "windows-2019"
       vmImage: "ubuntu-20.04"
     steps:
       - task: DotNetCoreCLI@2
@@ -74,6 +73,13 @@ jobs:
           imageName: "$(ImageName)"
           additionalImageTags: "$(Build.BuildNumber)"
           includeLatestTag: true
+      - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+        displayName: 'Replace tokens in **/*.yaml'
+        inputs:
+          rootDirectory: 'Pipelines/Releasing'
+          targetFiles: '**/*.yaml'
+          tokenPattern: rm
+          verbosity: detailed
       - task: PublishBuildArtifacts@1
         displayName: "Publish"
         inputs:
