@@ -9,6 +9,14 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
   - task: HelmInstaller@0
     displayName: "Install Helm"
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+    displayName: 'Replace tokens in **/*.yaml'
+    inputs:
+      rootDirectory: '$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart'
+      targetFiles: '**/*.yaml'
+      tokenPattern: rm
+      verbosity: detailed
+
   - task: HelmDeploy@0
     displayName: "helm upgrade"
     inputs:
