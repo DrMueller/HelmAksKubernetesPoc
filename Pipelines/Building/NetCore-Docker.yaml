@@ -31,6 +31,15 @@ jobs:
         inputs:
           projects: $(CsProjectPath)
           arguments: '/p:TreatWarningsAsErrors="true" --configuration $(BuildConfiguration)'
+      - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+        displayName: "Replace tokens in **/*.yaml"
+        inputs:
+          rootDirectory: "$(Build.SourcesDirectory)"
+        targetFiles: |
+          **/*.yaml
+          **/*.json
+          tokenPattern: rm
+          verbosity: detailed
       - task: DotNetCoreCLI@2
         displayName: Publish
         inputs:
@@ -73,13 +82,6 @@ jobs:
           imageName: "$(ImageName)"
           additionalImageTags: "$(Build.BuildNumber)"
           includeLatestTag: true
-      - task: qetza.replacetokens.replacetokens-task.replacetokens@5
-        displayName: 'Replace tokens in **/*.yaml'
-        inputs:
-          rootDirectory: 'Pipelines/Releasing'
-          targetFiles: '**/*.yaml'
-          tokenPattern: rm
-          verbosity: detailed
       - task: PublishBuildArtifacts@1
         displayName: "Publish"
         inputs:
