@@ -17,7 +17,8 @@ jobs:
   - job: "BuildAndPublishToNuGet"
     displayName: "Build and publish to NuGet"
     pool:
-      vmImage: "windows-2022"
+      # vmImage: "windows-2022"
+      vmImage: "windows-2019"
     steps:
       - task: DotNetCoreCLI@2
         displayName: Restore
