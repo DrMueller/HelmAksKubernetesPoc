@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.DataAccess.Data;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
+using WebApplication1.DataAccess.DbContexts;
 
 namespace WebApplication1.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public DeleteModel(WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext context)
+        public DeleteModel(AppDbContext context)
         {
             _context = context;
         }

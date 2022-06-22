@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.DataAccess.Data;
 
-namespace WebApplication1.DataAccess.DbContexts.Contexts.Implementation
+namespace WebApplication1.DataAccess.DbContexts
 {
-    public class AppDbContext : DbContext, IAppDbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions options)
             : base(options)

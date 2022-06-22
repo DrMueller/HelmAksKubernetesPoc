@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lamar;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
+using WebApplication1.DataAccess.DbContexts;
 using WebApplication1.Settings.Models;
 
 namespace WebApplication1

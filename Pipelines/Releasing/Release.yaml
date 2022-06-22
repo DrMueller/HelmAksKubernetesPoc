@@ -19,6 +19,8 @@ stages:
       - deployment: "DeploymentProduction"
         displayName: "Deployment Production"
         environment: "HelmAksKubernetesPoc"
+        variables:
+          - group: HelmAksKubernetesPoc-Prod
         strategy:
           runOnce:
             deploy:

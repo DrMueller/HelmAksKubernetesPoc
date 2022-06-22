@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
 
-namespace WebApplication1.DataAccess.DbContexts.Factories.Implementation
+namespace WebApplication1.DataAccess.DbContexts
 {
     public class DesignTimeAppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {

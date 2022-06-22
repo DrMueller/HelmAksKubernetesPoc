@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.DataAccess.Data;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
+using WebApplication1.DataAccess.DbContexts;
 
 namespace WebApplication1.Pages
 {
     public class CreateModel : PageModel
     {
-        private readonly WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public CreateModel(WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext context)
+        public CreateModel(AppDbContext context)
         {
             _context = context;
         }

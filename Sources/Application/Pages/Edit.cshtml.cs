@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.DataAccess.Data;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
+using WebApplication1.DataAccess.DbContexts;
 
 namespace WebApplication1.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public EditModel(WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext context)
+        public EditModel(AppDbContext context)
         {
             _context = context;
         }

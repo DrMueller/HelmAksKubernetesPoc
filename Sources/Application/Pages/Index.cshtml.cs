@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.DataAccess.Data;
-using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
+using WebApplication1.DataAccess.DbContexts;
 
 namespace WebApplication1.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public IndexModel(WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext context)
+        public IndexModel(AppDbContext context)
         {
             _context = context;
         }
