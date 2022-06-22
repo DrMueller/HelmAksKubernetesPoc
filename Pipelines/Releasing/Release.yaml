@@ -12,6 +12,9 @@ pool:
   name: Azure Pipelines
   vmImage: "windows-2022"
 
+variables:
+  - group: HelmAksKubernetesPoc-Prod
+
 stages:
   - stage: Production
     displayName: "Production"
@@ -19,8 +22,6 @@ stages:
       - deployment: "DeploymentProduction"
         displayName: "Deployment Production"
         environment: "HelmAksKubernetesPoc"
-        variables:
-          - group: HelmAksKubernetesPoc-Prod
         strategy:
           runOnce:
             deploy:
