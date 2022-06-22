@@ -36,8 +36,8 @@ jobs:
         inputs:
           rootDirectory: "$(Build.SourcesDirectory)"
           targetFiles: |
-            **/*.yaml
             **/*.json
+            **/*.yaml
           tokenPattern: rm
           verbosity: detailed
       - task: DotNetCoreCLI@2
