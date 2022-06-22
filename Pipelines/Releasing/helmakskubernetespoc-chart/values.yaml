@@ -17,7 +17,7 @@ fullnameOverride: ""
 
 envVariables:
  - name: "ConnectionStrings.DefaultConnection"
-   value: "__ConnectionString_"
+   value: "__ConnectionString__"
 
 serviceAccount:
   # Specifies whether a service account should be created
