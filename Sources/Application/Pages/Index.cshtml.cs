@@ -1,25 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using WebApplication1.Settings.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.DataAccess.Data;
+using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
 
 namespace WebApplication1.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly IAppSettingsProvider _settingsProvider;
-        public string AppVersion => _settingsProvider.Settings.AppVersion;
+        private readonly WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext _context;
 
-        public IndexModel(
-            ILogger<IndexModel> logger,
-            IAppSettingsProvider settingsProvider)
+        public IndexModel(WebApplication1.DataAccess.DbContexts.Contexts.Implementation.AppDbContext context)
         {
-            _logger = logger;
-            _settingsProvider = settingsProvider;
+            _context = context;
         }
 
-        public void OnGet()
+        public IList<Individual> Individual { get;set; }
+
+        public async Task OnGetAsync()
         {
+            Individual = await _context.Individual.ToListAsync();
         }
     }
 }

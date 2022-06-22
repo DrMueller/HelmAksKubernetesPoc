@@ -9,18 +9,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lamar;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.DataAccess.DbContexts.Contexts.Implementation;
 using WebApplication1.Settings.Models;
 
 namespace WebApplication1
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public IConfigurationRoot Configuration { get; }
 
-        public IConfiguration Configuration { get; }
+        public Startup(Microsoft.Extensions.Hosting.IHostEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", false, true);
+
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            builder
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", true, false);
+
+            if (environment == "Development")
+            {
+                builder.AddUserSecrets<AppSettings>();
+            }
+
+            Configuration = builder.Build();
+        }
 
         public void ConfigureContainer(ServiceRegistry services)
         {
@@ -31,8 +48,10 @@ namespace WebApplication1
                     scanner.WithDefaultConventions();
                 });
 
-            services.AddRazorPages();
             services.Configure<AppSettings>(Configuration.GetSection(AppSettings.SectionKey));
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddRazorPages();
         }
 
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
