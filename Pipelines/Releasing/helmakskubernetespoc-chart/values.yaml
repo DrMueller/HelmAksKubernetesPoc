@@ -16,7 +16,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 envVariables:
- - name: "ConnectionStrings.DefaultConnection"
+ - name: "ConnectionStrings__DefaultConnection"
    value: "__ConnectionStrings.DefaultConnection__"
 
 serviceAccount:

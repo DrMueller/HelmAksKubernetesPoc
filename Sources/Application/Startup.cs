@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Lamar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,10 +23,6 @@ namespace WebApplication1
                 .AddJsonFile("appsettings.json", false, true);
 
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            builder
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json", true, false);
 
             if (environment == "Development")
             {
