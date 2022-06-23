@@ -4,8 +4,8 @@
     {
         public const string SectionKey = "AppSettings";
 
-        public string ConnectionString { get; set; }
-
         public string AppVersion { get; set; }
+
+        public string Environment { get; set; }
     }
 }

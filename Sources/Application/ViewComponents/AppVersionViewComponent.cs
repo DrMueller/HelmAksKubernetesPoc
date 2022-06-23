@@ -16,7 +16,10 @@ namespace WebApplication1.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var vm = new AppVersionVm(_appSettingsProvider.Settings.AppVersion);
+            var vm = new AppVersionVm(
+                _appSettingsProvider.Settings.AppVersion,
+                _appSettingsProvider.Settings.Environment);
+
             return View(vm);
         }
     }

@@ -65,6 +65,9 @@ namespace WebApplication1
 
         public void ConfigureContainer(ServiceRegistry services)
         {
+            Debug.WriteLine("Hello from debug");
+            Console.WriteLine("Hello from console");
+
             services.Scan(
                 scanner =>
                 {

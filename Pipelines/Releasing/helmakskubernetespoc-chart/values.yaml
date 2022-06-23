@@ -18,6 +18,8 @@ fullnameOverride: ""
 envVariables:
  - name: "ConnectionStrings__DefaultConnection"
    value: "__ConnectionStrings.DefaultConnection__"
+ - name: "AppSettings_Environment"
+   value: "__AppSettings.Environment__"
 
 serviceAccount:
   # Specifies whether a service account should be created
