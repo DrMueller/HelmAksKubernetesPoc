@@ -18,7 +18,7 @@ fullnameOverride: ""
 envVariables:
  - name: "ConnectionStrings__DefaultConnection"
    value: "__ConnectionStrings.DefaultConnection__"
- - name: "AppSettings_Environment"
+ - name: "AppSettings__Environment"
    value: "__AppSettings.Environment__"
 
 serviceAccount:
