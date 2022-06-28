@@ -2,6 +2,7 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: {{ .Values.namespace }}
   name: {{ include "helmakskubernetespoc-chart.fullname" . }}
   labels:
     {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}

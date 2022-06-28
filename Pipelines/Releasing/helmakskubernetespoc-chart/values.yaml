@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+namespace: production
+
 image:
   repository: drmueller/helmakskubernetespoc
   pullPolicy: IfNotPresent
