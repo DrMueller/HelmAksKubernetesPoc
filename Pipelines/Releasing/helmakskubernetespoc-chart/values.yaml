@@ -16,10 +16,14 @@ nameOverride: ""
 fullnameOverride: ""
 
 envVariables:
- - name: "ConnectionStrings__DefaultConnection"
-   value: "__ConnectionStrings.DefaultConnection__"
  - name: "AppSettings__Environment"
    value: "__AppSettings.Environment__"
+ - name: ConnectionStrings__DefaultConnection
+   valueFrom:
+     secretKeyRef:
+       name: mysecret
+       key: ConnectionString
+       optional: false
 
 serviceAccount:
   # Specifies whether a service account should be created
