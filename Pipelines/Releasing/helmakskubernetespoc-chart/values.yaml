@@ -5,7 +5,6 @@
 replicaCount: 1
 
 image:
-  # repository: mcr.microsoft.com/mslearn/samples/contoso-website
   repository: drmueller/helmakskubernetespoc
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -22,7 +21,7 @@ envVariables:
     valueFrom:
       secretKeyRef:
         name: mysecret
-        key: ConnectionString
+        key: ConnectionStrings.DefaultConnection
         optional: false
 
 serviceAccount:
