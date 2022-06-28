@@ -24,11 +24,6 @@ envVariables:
         name: mysecret
         key: ConnectionString
         optional: false
-  - name: Tra
-    valueFrom:
-      secretKeyRef:
-        name: mysecret
-        optional: true
 
 serviceAccount:
   # Specifies whether a service account should be created
