@@ -9,9 +9,6 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
   - task: HelmInstaller@0
     displayName: "Install Helm"
-  - powershell: |
-      Write-Host "Con2: $(ConnectionStrings.DefaultConnection)"
-    displayName: 'Update Environment BuildVersion'
   - task: qetza.replacetokens.replacetokens-task.replacetokens@5
     displayName: "Replace tokens in **/*.yaml"
     inputs:
