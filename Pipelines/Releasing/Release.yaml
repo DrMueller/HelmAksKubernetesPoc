@@ -13,15 +13,34 @@ pool:
   vmImage: "windows-2022"
 
 variables:
-  - group: HelmAksKubernetesPoc-Prod
+  - name: isMaster
+    value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/master')]
 
 stages:
+  - stage: Development
+    condition: eq(variables.isMaster, false)
+    displayName: "Development"
+    jobs:
+      - deployment: "DeploymentDevelopment"
+        displayName: "Deployment Development"
+        environment: "HelmAksKubernetesPoc"
+        variables:
+          - group: HelmAksKubernetesPoc-Dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: Release_Steps.yaml
+
   - stage: Production
+    condition: eq(variables.isMaster, true)
     displayName: "Production"
     jobs:
       - deployment: "DeploymentProduction"
         displayName: "Deployment Production"
         environment: "HelmAksKubernetesPoc"
+        variables:
+          - group: HelmAksKubernetesPoc-Prod
         strategy:
           runOnce:
             deploy:
