@@ -28,4 +28,4 @@ steps:
       # releaseName: release$(KubernetesNamespace)
       namespace: $(KubernetesNamespace)
       waitForExecution: false
-      arguments: "--debug"
+      arguments: "--debug --create-namespace"
