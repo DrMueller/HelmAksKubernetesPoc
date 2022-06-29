@@ -47,7 +47,7 @@ Selector labels
 */}}
 {{- define "helmakskubernetespoc-chart.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "helmakskubernetespoc-chart.name" . }}
-app.kubernetes.io/instance: release-__KubernetesCluster__
+app.kubernetes.io/instance: {{ .Release.Name }}
 
 {{- end }}
 
