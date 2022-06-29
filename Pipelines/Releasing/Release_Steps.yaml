@@ -1,18 +1,18 @@
 steps:
-  # - task: DownloadBuildArtifacts@1
-  #   displayName: "Download Build Artifacts"
-  #   inputs:
-  #     buildType: specific
-  #     project: 'ba9fa09c-552b-4c7d-ac6c-65c3351012f4'
-  #     pipeline: 198
-  #     specificBuildWithTriggering: true
-  #     downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@1
+    displayName: "Download Build Artifacts"
+    inputs:
+      buildType: specific
+      project: 'ba9fa09c-552b-4c7d-ac6c-65c3351012f4'
+      pipeline: 198
+      specificBuildWithTriggering: true
+      downloadPath: $(System.DefaultWorkingDirectory)
   - task: HelmInstaller@0
     displayName: "Install Helm"
   - task: qetza.replacetokens.replacetokens-task.replacetokens@5
     displayName: "Replace tokens"
     inputs:
-      rootDirectory: "$(System.ArtifactsDirectory)/poc-pip/drop"
+      rootDirectory: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
       targetFiles: |
         **/*.*
       tokenPattern: rm
@@ -24,7 +24,7 @@ steps:
       kubernetesServiceConnection: '\HelmAksKubernetesPoc3'
       command: upgrade
       chartType: FilePath
-      chartPath: "$(System.ArtifactsDirectory)/poc-pip/drop"
+      chartPath: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
       releaseName: release-$(KubernetesCluster)
       waitForExecution: false
       arguments: "--debug"
