@@ -14,8 +14,7 @@ steps:
     inputs:
       rootDirectory: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
       targetFiles: |
-        **/*.yaml
-        **/*.tpl
+        **/*.*
       tokenPattern: rm
       verbosity: detailed
   - task: HelmDeploy@0
