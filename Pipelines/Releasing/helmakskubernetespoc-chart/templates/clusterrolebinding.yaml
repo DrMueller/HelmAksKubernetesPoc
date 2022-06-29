@@ -1,0 +1,13 @@
+{{- if .Values.serviceAccount.create -}}
+apiVersion: v1
+kind: ClusterRoleBinding
+metadata:
+ name: admin-binding
+roleRef:
+ kind: ClusterRole
+ name: admin
+ apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: User
+  name: {{ include "helmakskubernetespoc-chart.serviceAccountName" . }}
+  apiGroup: rbac.authorization.k8s.io
