@@ -10,9 +10,9 @@ steps:
   - task: HelmInstaller@0
     displayName: "Install Helm"
   - task: qetza.replacetokens.replacetokens-task.replacetokens@5
-    displayName: "Replace tokens in **/*.yaml"
+    displayName: "Replace tokens"
     inputs:
-      rootDirectory: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
+      rootDirectory: "$(Build.StagingDirectory)/drop/helmakskubernetespoc-chart"
       targetFiles: |
         **/*.*
       tokenPattern: rm
@@ -24,7 +24,7 @@ steps:
       kubernetesServiceConnection: '\HelmAksKubernetesPoc3'
       command: upgrade
       chartType: FilePath
-      chartPath: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
+      chartPath: "$(Build.StagingDirectory)/drop/helmakskubernetespoc-chart"
       releaseName: release-$(KubernetesCluster)
       waitForExecution: false
       arguments: "--debug"
