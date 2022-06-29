@@ -21,8 +21,8 @@ steps:
     displayName: "helm upgrade"
     inputs:
       connectionType: "Kubernetes Service Connection"
-      kubernetesServiceConnection: helmakskubernetespoc2
-      namespace: default
+      kubernetesServiceConnection: '\HelmAksKubernetesPoc3'
+      # namespace: default
       command: upgrade
       chartType: FilePath
       chartPath: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
