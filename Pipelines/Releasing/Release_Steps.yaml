@@ -25,7 +25,6 @@ steps:
       command: upgrade
       chartType: FilePath
       chartPath: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
-      # chartVersion: 1
-      releaseName: release
+      releaseName: release-__KubernetesCluster__
       waitForExecution: false
       arguments: "--debug"
