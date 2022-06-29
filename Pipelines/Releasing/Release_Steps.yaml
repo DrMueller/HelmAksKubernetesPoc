@@ -1,12 +1,12 @@
 steps:
-  - task: DownloadBuildArtifacts@1
-    displayName: "Download Build Artifacts"
-    inputs:
-      buildType: specific
-      project: 'ba9fa09c-552b-4c7d-ac6c-65c3351012f4'
-      pipeline: 198
-      specificBuildWithTriggering: true
-      downloadPath: $(System.DefaultWorkingDirectory)
+  # - task: DownloadBuildArtifacts@1
+  #   displayName: "Download Build Artifacts"
+  #   inputs:
+  #     buildType: specific
+  #     project: 'ba9fa09c-552b-4c7d-ac6c-65c3351012f4'
+  #     pipeline: 198
+  #     specificBuildWithTriggering: true
+  #     downloadPath: $(System.DefaultWorkingDirectory)
   - task: HelmInstaller@0
     displayName: "Install Helm"
   - task: qetza.replacetokens.replacetokens-task.replacetokens@5
@@ -15,6 +15,7 @@ steps:
       rootDirectory: "$(System.DefaultWorkingDirectory)/drop/helmakskubernetespoc-chart"
       targetFiles: |
         **/*.yaml
+        **/*.tpl
       tokenPattern: rm
       verbosity: detailed
   - task: HelmDeploy@0
