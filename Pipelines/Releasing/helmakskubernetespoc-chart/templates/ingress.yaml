@@ -16,7 +16,6 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  namespace: {{ .Values.namespace }}
   labels:
     {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -38,25 +37,21 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: 09ab799fd5674c4594a5.centralus.aksapp.io
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
-            pathType: {{ .pathType }}
-            {{- end }}
+          - path: /development
+            pathType: Prefix
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.development }}
                 port:
-                  number: {{ $svcPort }}
-              {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
-              {{- end }}
-          {{- end }}
-    {{- end }}
+                  number: {{ .Values.service.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.production }}
+                port:
+                  number: {{ .Values.service.port }}
 {{- end }}

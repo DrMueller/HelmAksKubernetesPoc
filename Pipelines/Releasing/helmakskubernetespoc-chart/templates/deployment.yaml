@@ -4,7 +4,6 @@ metadata:
   name: {{ include "helmakskubernetespoc-chart.fullname" . }}
   labels:
     {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}
-  namespace: {{ .Values.namespace }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
