@@ -44,14 +44,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{.Values.namespaces.development }}
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.development }}
                 port:
                   number: {{ .Values.service.port }}
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{.Values.namespaces.production }}
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.production }}
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}
