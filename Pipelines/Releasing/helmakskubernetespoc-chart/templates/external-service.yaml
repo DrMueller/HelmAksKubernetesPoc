@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "helmakskubernetespoc-chart.fullname" .}}external
+  namespace: default
+    labels:
+      {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}
+spec:
+  type: ExternalName
+  externalName: {{ include "helmakskubernetespoc-chart.fullname" .}}.{{ .Release.Namespace }}.svc.cluster.local
+  ports:
+  - port: 80
