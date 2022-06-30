@@ -4,8 +4,6 @@
 
 replicaCount: 1
 
-namespace: __KubernetesNamespace__
-
 image:
   repository: drmueller/helmakskubernetespoc
   pullPolicy: IfNotPresent
