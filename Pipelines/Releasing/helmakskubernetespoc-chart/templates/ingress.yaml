@@ -45,16 +45,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.development }}
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.development }}
                 port:
-                  number: {{ .Values.service.port }}
+                  number: {{ .Values.externalService.port }}
           - path: /
             pathType: Prefix
             backend:
               service:
-                # name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.production }}
-                name: nginx
+                name: {{ include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.production }}
                 port:
-                  # number: {{ .Values.service.port }}
-                  number: 80
+                  number: {{ .Values.externalService.port }}
 {{- end }}
