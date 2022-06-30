@@ -8,6 +8,6 @@ metadata:
 spec:
   type: ExternalName
   # externalName: {{ include "helmakskubernetespoc-chart.fullname" .}}.{{ .Release.Namespace }}.svc.cluster.local
-  externalName: tra.production.svc.cluster.local
+  externalName: {{ include "helmakskubernetespoc-chart.fullname" .}}.production.svc.cluster.local
   ports:
   - port: 80
