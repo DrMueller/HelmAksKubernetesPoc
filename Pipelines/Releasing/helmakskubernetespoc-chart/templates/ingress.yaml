@@ -37,21 +37,20 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    hosts:
-      - host: 09ab799fd5674c4594a5.centralus.aksapp.io
-        paths:
-          - path: /development
-            pathType: Prefix
-            backend:
-              service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.development }}
-                port:
-                  number: {{ .Values.service.port }}
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.production }}
-                port:
-                  number: {{ .Values.service.port }}
+    - host: 09ab799fd5674c4594a5.centralus.aksapp.io
+      paths:
+        - path: /development
+          pathType: Prefix
+          backend:
+            service:
+              name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.development }}
+              port:
+                number: {{ .Values.service.port }}
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: {{include "helmakskubernetespoc-chart.fullname" .}}{{ .Values.namespaces.production }}
+              port:
+                number: {{ .Values.service.port }}
 {{- end }}
