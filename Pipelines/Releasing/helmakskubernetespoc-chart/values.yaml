@@ -14,6 +14,10 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+namespaces:
+  development: "development"
+  production: "production"
+
 envVariables:
   - name: "AppSettings__Environment"
     value: "__AppSettings.Environment__"
@@ -57,11 +61,7 @@ ingress:
   className: ""
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing # Use the HTTP application routing add-on
-  hosts:
-    - host: 09ab799fd5674c4594a5.centralus.aksapp.io
-      paths:
-        - path: /
-          pathType: Prefix
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
