@@ -1,7 +1,8 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ include "helmakskubernetespoc-chart.fullname" .}}external
+  # name: {{ include "helmakskubernetespoc-chart.fullname" .}}external
+  name: nginx
   namespace: default
   labels:
     {{- include "helmakskubernetespoc-chart.labels" . | nindent 4 }}
