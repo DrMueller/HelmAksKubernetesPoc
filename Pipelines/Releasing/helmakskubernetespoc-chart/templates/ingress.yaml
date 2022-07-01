@@ -41,18 +41,18 @@ spec:
     - host: 09ab799fd5674c4594a5.centralus.aksapp.io
       http:
         paths:
-          - path: /development
+          - path: /?(.*)
             pathType: Prefix
             backend:
               service:
-                name: {{include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.development }}
+                name: {{include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.production }}
                 port:
                   number: {{ .Values.externalService.port }}
-          - path: /
+          - path: /dev/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: {{ include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.production }}
+                name: {{ include "helmakskubernetespoc-chart.fullname" .}}external{{ .Values.namespaces.development }}
                 port:
                   number: {{ .Values.externalService.port }}
 {{- end }}
