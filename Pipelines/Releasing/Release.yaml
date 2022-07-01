@@ -5,7 +5,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: poc-pip # Name of the pipeline resource
-      source: HelmAksKubernetesPoc-CI # Name of the pipeline referenced by the pipeline resource
+      source: 02-HAKP-Create-Artifacts # Name of the pipeline referenced by the pipeline resource
       trigger: true
 
 pool:
