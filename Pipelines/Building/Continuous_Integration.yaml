@@ -1,0 +1,24 @@
+name: 1.0$(rev:.r) # build numbering format
+
+variables:
+  BuildConfiguration: "Release"
+  CsProjectPath: "Sources/Application/*.csproj"
+
+jobs:
+  - job: "BuildAndPublishToNuGet"
+    displayName: "Build and publish to NuGet"
+    pool:
+      vmImage: "ubuntu-20.04"
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs:
+          command: restore
+          projects: $(CsProjectPath)
+          vstsFeed: "3c2d9c9a-d8f7-42f4-b7a3-dddf4064110a"
+          verbosityRestore: Diagnostic
+      - task: DotNetCoreCLI@2
+        displayName: "Build with Warnings as Errors"
+        inputs:
+          projects: $(CsProjectPath)
+          arguments: '/p:TreatWarningsAsErrors="true" --configuration $(BuildConfiguration)'
