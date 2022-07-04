@@ -37,7 +37,8 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UsePathBase("/dev");
+            var config = Configuration.GetSection($"{AppSettings.SectionKey}:{nameof(AppSettings.AppBasePath)}").Get<string>();
+            app.UsePathBase(config);
 
             app.UseMiddleware<RouteMiddleware>();
 

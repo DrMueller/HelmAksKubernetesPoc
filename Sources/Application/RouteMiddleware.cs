@@ -17,23 +17,23 @@ namespace WebApplication1
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var subPathToAdd = _appSettingsProvider.Settings.AppSubPath;
-            Console.WriteLine("Before: " + context.Request.Path);
+            //var subPathToAdd = _appSettingsProvider.Settings.AppSubPath;
+            //Console.WriteLine("Before: " + context.Request.Path);
 
-            if (string.IsNullOrEmpty(subPathToAdd))
-            {
+            //if (string.IsNullOrEmpty(subPathToAdd))
+            //{
                 await next.Invoke(context);
-            }
+            //}
 
-            var splittedUrl = context.Request.Path.Value.Split("/");
-            var filtered = splittedUrl.Where(f => f != subPathToAdd);
-            var newUri = string.Join('/', filtered);
+            //var splittedUrl = context.Request.Path.Value.Split("/");
+            //var filtered = splittedUrl.Where(f => f != subPathToAdd);
+            //var newUri = string.Join('/', filtered);
 
-            context.Request.Path = newUri;
+            //context.Request.Path = newUri;
             
-            Console.WriteLine("After: " + context.Request.Path);
+            //Console.WriteLine("After: " + context.Request.Path);
 
-            await next.Invoke(context);
+            //await next.Invoke(context);
         }
     }
 }
