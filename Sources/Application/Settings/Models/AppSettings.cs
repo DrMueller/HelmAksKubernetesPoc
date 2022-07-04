@@ -7,5 +7,7 @@
         public string AppVersion { get; set; }
 
         public string Environment { get; set; }
+
+        public string AppSubPath { get; set; }
     }
 }

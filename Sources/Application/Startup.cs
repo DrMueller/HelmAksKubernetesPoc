@@ -37,6 +37,8 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<RouteMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,13 +61,13 @@ namespace WebApplication1
             app.UseEndpoints(
                 endpoints =>
                 {
+
                     endpoints.MapRazorPages();
                 });
         }
 
         public void ConfigureContainer(ServiceRegistry services)
         {
-            Debug.WriteLine("Hello from debug");
             Console.WriteLine("Hello from console");
 
             services.Scan(
