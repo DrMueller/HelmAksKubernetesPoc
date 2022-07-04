@@ -17,11 +17,16 @@ namespace WebApplication1
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            var subPathToAdd = _appSettingsProvider.Settings.AppSubPath;
             Console.WriteLine("Before: " + context.Request.Path);
 
-            var subPath = _appSettingsProvider.Settings.AppSubPath;
+            if (string.IsNullOrEmpty(subPathToAdd))
+            {
+                await next.Invoke(context);
+            }
+
             var splittedUrl = context.Request.Path.Value.Split("/");
-            var filtered = splittedUrl.Where(f => f != subPath);
+            var filtered = splittedUrl.Where(f => f != subPathToAdd);
             var newUri = string.Join('/', filtered);
 
             context.Request.Path = newUri;
