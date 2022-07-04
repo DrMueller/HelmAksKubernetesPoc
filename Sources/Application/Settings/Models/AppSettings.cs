@@ -8,6 +8,6 @@
 
         public string Environment { get; set; }
 
-        public string AppSubPath { get; set; }
+        public string AppBasePath { get; set; }
     }
 }

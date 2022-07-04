@@ -21,8 +21,8 @@ namespaces:
 envVariables:
   - name: "AppSettings__Environment"
     value: "__AppSettings.Environment__"
-  - name: "AppSettings__AppSubPath"
-    value: "__AppSettings.AppSubPath__"
+  - name: "AppSettings__AppBasePath"
+    value: "__AppSettings.AppBasePath__"
   - name: ConnectionStrings__DefaultConnection
     valueFrom:
       secretKeyRef:
