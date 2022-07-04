@@ -40,8 +40,6 @@ namespace WebApplication1
             var config = Configuration.GetSection($"{AppSettings.SectionKey}:{nameof(AppSettings.AppBasePath)}").Get<string>();
             app.UsePathBase(config);
 
-            app.UseMiddleware<RouteMiddleware>();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
